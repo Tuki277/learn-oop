@@ -2,50 +2,22 @@
 
 using namespace std;
 
-class ARRAY {
+class Array {
     int *a, n;
     public:
-        ARRAY operator++ ();
-        ARRAY operator-- ();
-        friend istream& operator >> (istream& x, ARRAY& y);
-        friend ostream& operator << (ostream& x, ARRAY y);
+        Array operator++ ();
+        Array operator-- ();
+        friend ostream& operator << (ostream& x, Array y);
+        friend istream& operator >> (istream& x, Array &y);
 };
 
-ARRAY ARRAY :: operator++()
-{
-	for (int i = 0; i < n-1; i++)
-	{
-		for (int j = i+1; j < n; j++)
-		{
-			if (a[i] > a[j])
-			{
-				int temp = a[i];
-				a[i] = a[j];
-				a[j] = temp;
-			}
-		}
-	}
-	return *this;
+ostream& operator << (ostream& x, Array y) {
+    for (int i = 0; i < y.n; i++) {
+        cout << y.a[i];
+    }
 }
 
-ARRAY ARRAY :: operator--()
-{
-	for (int i = 0; i < n-1; i++)
-	{
-		for (int j = i+1; j < n; j++)
-		{
-			if (a[i] < a[j])
-			{
-				int temp = a[i];
-				a[i] = a[j];
-				a[j] = temp;
-			}
-		}
-	}
-	return *this;
-}
-
-istream& operator >> (istream& x, ARRAY& y) {
+istream& operator >> (istream& x, Array &y) {
     cout << "Nhap n: ";
     cin >> y.n;
     y.a = new int[y.n];
@@ -54,19 +26,38 @@ istream& operator >> (istream& x, ARRAY& y) {
     }
 }
 
-ostream& operator << (ostream& x, ARRAY y) {
-    for (int i = 0; i< y.n; i++ ) {
-        cout << y.a[i];
+Array Array :: operator++ () {
+    for (int i = 0; i<n; i++) {
+        for (int j = i+1; j<n; j++) {
+            if (a[i] > a[j]) {
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
     }
+    return *this;
+}
+
+Array Array :: operator-- () {
+    for (int i = 0; i<n; i++) {
+        for (int j = i+1; j<n; j++) {
+            if (a[i] < a[j]) {
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+    return *this;
 }
 
 int main () {
-    ARRAY x;
-	cout<<"Nhap mang x: "<<endl;
-	cin>>x;
-	cout<<"Mang x vua nhap la: "<<endl;
-	cout<<x;
-	x = ++x;
-	cout<<"\nMang x tang dan: "<<endl;
-	cout<<x<<endl;
+    Array a;
+    cout << "Nhap mang: ";
+    cin >> a;
+    cout << a;
+    cout << endl;
+    a = ++a;
+    cout << a;
 }

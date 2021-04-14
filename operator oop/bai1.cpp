@@ -2,69 +2,70 @@
 
 using namespace std;
 
-class PS {
-    int ts, ms;
+class ps {
+    int tu, mau;
     public:
-        PS operator+ (PS x);
-        PS operator- (PS x);
-        PS operator* (PS x);
-        PS operator/ (PS x);
+        ps operator+ (ps x);
+        ps operator- (ps x);
+        ps operator* (ps x);
+        ps operator/ (ps x);
         float operator- ();
-        friend ostream& operator << (ostream& a, PS x);
-        friend istream& operator >> (istream& a, PS& x);
+        friend istream& operator >> (istream& x, ps& y);
+        friend ostream& operator << (ostream& x, ps y);
 };
 
-PS PS :: operator+ (PS x) {
-    PS tg;
-    tg.ts = ts * x.ms + ms * x.ts;
-    tg.ms = ms * x.ms;
+ps ps :: operator+ (ps x) {
+    ps tg;
+    tg.tu = tu * x.mau + mau * x.tu;
+    tg.mau = mau * x.mau;
     return tg;
 }
 
-PS PS :: operator- (PS x) {
-    PS tg;
-    tg.ts = ts * x.ms - ms * x.ts;
-    tg.ms = ms * x.ms;
+ps ps :: operator- (ps x) {
+    ps tg;
+    tg.tu = tu * x.mau - mau * x.tu;
+    tg.mau = tu * x.mau;
     return tg;
 }
 
-PS PS :: operator* (PS x) {
-    PS tg;
-    tg.ts = ts * x.ts;
-    tg.ms = ms * x.ms;
+ps ps :: operator* (ps x) {
+    ps tg;
+    tg.tu = tu * x.tu;
+    tg.mau = mau * x.mau;
     return tg;
 }
 
-PS PS :: operator/ (PS x) {
-    PS tg;
-    tg.ts = ts * x.ms;
-    tg.ms = ms * x.ts;
+ps ps :: operator/ (ps x) {
+    ps tg;
+    tg.tu = tu * x.mau;
+    tg.mau = mau * x.tu;
     return tg;
 }
 
-float PS :: operator- () {
-    return (float)ts / ms;
+float ps :: operator- () {
+    return (float) tu / mau;
 }
 
-ostream& operator << (ostream& a, PS x) {
-    cout << x.ts << " / " << x.ms << endl;
-    return a;
+istream& operator >> (istream& x, ps& y) {
+    cout << "Nhap ps: ";
+    cin >> y.tu >> y.mau;
+    return x;
 }
 
-istream& operator >> (istream& a, PS& x) {
-    cout << "Nhap tu so : ";
-    cin >> x.ts;
-    cout << "Nhap mau so : ";
-    cin >> x.ms;
-    return a;
+ostream& operator << (ostream& x, ps y) {
+    cout << y.tu << " / " << y.mau << endl;
+    return x;
 }
 
 int main () {
-    PS a, b;
-    cout << "Nhap phan so dau tien: ";
+    ps a, b;
     cin >> a;
-    cout << "Nhap phan so thu hai: ";
+    cout << a;
     cin >> b;
-    PS H = a + b;
-    cout << "tong = " << -H;
+    cout << b;
+    ps H = a + b;
+    cout << -H;
+    ofstream f("Hieungu.txt", ios::app);
+    f << -a << " + " <<  -b << " = " << -H;
+    f.close();
 }
